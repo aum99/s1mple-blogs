@@ -2,8 +2,18 @@
 
 {% block content %}
 
+{% for message in get_flashed_messages() %}
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+
 {% if name%}
     <h1>HELLO {{ name }}!!!</h1>
+<br>
+<img src="{{ url_for('static', filename='images/tech.jpg') }}" style="height:500px; width=500px">
 {% else %}
     <h1>WHATS YOUR NAME?</h1>
     <br>
