@@ -15,7 +15,7 @@ ckeditor = CKEditor(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:aum150402@localhost/our_users'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ecvccjywwdquih:3e90377a721b78190de9196d66a61527e3fd8e59c3f87857' \
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ecvccjywwdquih:3e90377a721b78190de9196d66a61527e3fd8e59c3f87857' \
                                         '870e86fe71f22ead@ec2-54-152-28-9.compute-1.amazonaws.com:5432/d3083sbh16l0in'
 app.config['SECRET_KEY'] = 'this is a secret key'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
