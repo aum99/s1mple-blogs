@@ -15,10 +15,10 @@ ckeditor = CKEditor(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:aum150402@localhost/our_users'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ecvccjywwdquih:3e90377a721b78190de9196d66a61527e3fd8e59c3f87857' \
-                                        '870e86fe71f22ead@ec2-54-152-28-9.compute-1.amazonaws.com:5432/d3083sbh16l0in'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://yifjqswrviguky:0b3749151d82e1a0209d7ae06fbad73fdb9097b0903d1d932' \
-                                        '59d5aefc89f9ab7@ec2-44-207-126-176.compute-1.amazonaws.com:5432/dbvm4qsrm6vhh9'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ecvccjywwdquih:3e90377a721b78190de9196d66a61527e3fd8e59c3f87857' \
+#                                         '870e86fe71f22ead@ec2-54-152-28-9.compute-1.amazonaws.com:5432/d3083sbh16l0in'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ucolwrtkbjcqig:2d05c712aac724548aa9756430113a27ea5fc309e05bc3894b' \
+                                        '87b4b7ca4e0d6e@ec2-44-210-36-247.compute-1.amazonaws.com:5432/ddchjtad3687he'
 app.config['SECRET_KEY'] = 'this is a secret key'
 # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 UPLOAD_FOLDER = '/Users/aumravibattul/flasker/static/images/'
@@ -37,7 +37,7 @@ class Posts(db.Model):
     title = db.Column(db.String(155))
     author = db.Column(db.String(155))
     slug = db.Column(db.String(155))
-    content = db.Column(db.Text)
+    content = db.Column(db.Text())
     post_added = db.Column(db.DateTime, default=datetime.utcnow())
     poster_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
