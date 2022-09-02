@@ -12,12 +12,36 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{{ url_for('user_form') }}">NAME</a>
         </li>
+        {% if current_user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ url_for('add_user') }}">ADD USER</a>
+          <a class="nav-link active" aria-current="page" href="{{ url_for('logout') }}">LOGOUT</a>
+        </li>
+        {% if current_user.id == 13 %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('admin') }}">ADMIN</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('dashboard') }}">DASHBOARD</a>
+        </li>
+        {%  else %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('login') }}">LOGIN</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('add_user') }}">REGISTER</a>
+        </li>
+        {% endif %}
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('add_post') }}">ADD BLOG POST</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{{ url_for('posts') }}">POSTS</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <form class="d-flex" role="search" method="POST" action="{{ url_for('search') }}">
+        {{ form.hidden_tag() }}
+        <input class="form-control me-2" type="search" name="searched" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>

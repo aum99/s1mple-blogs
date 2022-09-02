@@ -10,19 +10,7 @@
     </div>
 {% endfor %}
 
-{% if name%}
-    <h1>User Update...</h1>
-
-<table class="table table-hover table-striped">
-{% for our_user in our_users %}
-
-    <tr>
-        <td> {{ our_user.id }}. {{ our_user.name }} - {{ our_user.email }} - {{ our_user.fav_color }}</td>
-    </tr>
-
-{% endfor %}
-    </table>
-{% else %}
+{% if id == current_user.id %}
     <h1>User update</h1>
     <br>
     <div class="shadow p-3 mb-5 bg-body rounded">
@@ -30,6 +18,8 @@
         {{ form.hidden_tag() }}
         {{ form.name.label(class="form-label") }}
         {{ form.name(class="form-control", value=name_to_update.name) }}
+        {{ form.username.label(class="form-label") }}
+        {{ form.username(class="form-control", value=name_to_update.username) }}
         {{ form.email.label(class="form-label") }}
         {{ form.email(class="form-control", value= name_to_update.email) }}
         {{ form.fav_color.label(class="form-label") }}
@@ -40,8 +30,12 @@
     </form>
     </div>
 
-<br> <br> <br>
-
-{% endif %}
-
+{% else %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    Sorry you cant edit this user profile...
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<h2>Access Denied</h2>
+<p>Sorry, You cant access this page...</p>
+{% endif%}
 {% endblock %}
