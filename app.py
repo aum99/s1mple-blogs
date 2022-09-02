@@ -17,8 +17,10 @@ ckeditor = CKEditor(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:aum150402@localhost/our_users'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ecvccjywwdquih:3e90377a721b78190de9196d66a61527e3fd8e59c3f87857' \
                                         '870e86fe71f22ead@ec2-54-152-28-9.compute-1.amazonaws.com:5432/d3083sbh16l0in'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://yifjqswrviguky:0b3749151d82e1a0209d7ae06fbad73fdb9097b0903d1d932' \
+                                        '59d5aefc89f9ab7@ec2-44-207-126-176.compute-1.amazonaws.com:5432/dbvm4qsrm6vhh9'
 app.config['SECRET_KEY'] = 'this is a secret key'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 UPLOAD_FOLDER = '/Users/aumravibattul/flasker/static/images/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 db = SQLAlchemy(app)
@@ -120,19 +122,26 @@ def dashboard():
         name_to_update.fav_color = request.form['fav_color']
         name_to_update.username = request.form['username']
         name_to_update.about_author = request.form['about_author']
-        name_to_update.profile_picture = request.files['profile_picture']
-        pic_filename = secure_filename(name_to_update.profile_picture.filename)
-        pic_name = str(uuid.uuid1()) + '_' + pic_filename
-        saver = request.files['profile_picture']
-        name_to_update.profile_picture = pic_name
-        try:
+
+        if request.files['profile_picture']:
+            name_to_update.profile_picture = request.files['profile_picture']
+            pic_filename = secure_filename(name_to_update.profile_picture.filename)
+            pic_name = str(uuid.uuid1()) + '_' + pic_filename
+            saver = request.files['profile_picture']
+            name_to_update.profile_picture = pic_name
+            try:
+                db.session.commit()
+                saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+                flash("User Updated Successfully!")
+                return render_template("dashboard.html", form=form, name_to_update=name_to_update)
+            except:
+                flash("Error! There was something wrong.... Please try again")
+                return render_template("dashboard.html", form=form, name_to_update=name_to_update)
+        else:
             db.session.commit()
-            saver.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
             flash("User Updated Successfully!")
             return render_template("dashboard.html", form=form, name_to_update=name_to_update)
-        except:
-            flash("Error! There was something wrong.... Please try again")
-            return render_template("dashboard.html", form=form, name_to_update=name_to_update)
+
     else:
         return render_template("dashboard.html", form=form, name_to_update=name_to_update, id=id)
 
@@ -205,13 +214,6 @@ def delete(id):
 def index():
     return render_template('index.html')
 
-
-@app.route('/user/<name>')
-@login_required
-def user(name):
-    return render_template('user.html', user=name)
-
-
 @app.errorhandler(404)
 def error(e):
     return render_template('404.html'), 404
@@ -233,17 +235,6 @@ def test_pw():
         pw_to_check = Users.query.filter_by(email=email).first()
         passed = check_password_hash(pw_to_check.password_hash, password)
     return render_template('test_pw.html', email=email, password=password, form=form, pw_to_check=pw_to_check, passed=passed)
-
-
-@app.route('/name', methods=['GET', 'POST'])
-def user_form():
-    name = None
-    form = NamerForm()
-    if form.validate_on_submit():
-        name = form.name.data.title()
-        form.name.data = ''
-        flash("FORM SUBMITTED SUCCESSFULLY")
-    return render_template('name.html', name=name, form=form)
 
 
 # ADD POST PAGE
@@ -285,7 +276,7 @@ def edit_post(id):
     post = Posts.query.get_or_404(id)
     form = PostForm()
     id = current_user.id
-    if id == post.poster.id:
+    if id == post.poster.id or id == 1:
         if form.validate_on_submit():
             post.title = form.title.data
             post.slug = form.slug.data
@@ -311,7 +302,7 @@ def edit_post(id):
 def delete_post(id):
     post_to_delete = Posts.query.get_or_404(id)
     id = current_user.id
-    if id == post_to_delete.poster.id:
+    if id == post_to_delete.poster.id or id == 1:
         try:
             db.session.delete(post_to_delete)
             db.session.commit()

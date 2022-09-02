@@ -1,7 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>WELCOME TO THE PAGE</h1>
-<p>Isnt this cool</p>
-<p>Look out for more pages</p>
+<h1 align="center" style="color:grey">Publish your passions, your way</h1>
+<br>
+<p align="center">Create a unique and beautiful blog easily.</p>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" align="right">
+            <a href="{{ url_for('add_user') }}" class="btn btn-primary">CLICK TO SIGN UP</a>
+        </div>
+        <div class="col-md-6" align="left">
+            <a href="{{ url_for('login') }}" class="btn btn-primary">CLICK TO LOGIN</a>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

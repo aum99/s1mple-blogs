@@ -35,7 +35,7 @@
                     <br>
                     <strong>About author:</strong> {{ current_user.about_author }}
                     <br>
-                    <strong>Profile pic</strong> {{ current_user.profile_picture }}
+                    <strong>Profile pic</strong> {{ current_user.profile_picture  }}
                     <br>
                     </p>
                     <a href="{{ url_for('logout') }}" class="btn btn-secondary btn-sm">Logout</a>
@@ -44,9 +44,15 @@
                     <br>
                     <br>
                 </div>
+                {% if current_user.profile_picture %}
+                <div class="col-4">
+                    <img src="{{ url_for('static', filename='images/' + current_user.profile_picture) }}" width="200" height="200" align="right" alt="">
+                </div>
+                {% else %}
                 <div class="col-4">
                     <img src="{{ url_for('static', filename='images/default-profile-pic.png') }}" align="right" alt="">
                 </div>
+                {% endif %}
           </div>
       </div>
   </div>

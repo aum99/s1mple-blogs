@@ -22,7 +22,7 @@ class UserForm(FlaskForm):
     username = StringField("USERNAME:", validators=[DataRequired()])
     email = StringField("EMAIL:", validators=[DataRequired()])
     fav_color = StringField("FAVOURITE COLOR:")
-    about_author = TextAreaField("About author")
+    about_author = TextAreaField("ABOUT AUTHOR:")
     password_hash = PasswordField("PASSWORD:", validators=[DataRequired(), EqualTo('password_hash2', message='Password must match')])
     password_hash2 = PasswordField("CONFIRM PASSWORD:", validators=[DataRequired()])
     profile_picture = FileField("PROFILE PIC:")
