@@ -71,7 +71,7 @@ class Users(db.Model, UserMixin):
 @login_required
 def admin():
     id = current_user.id
-    if id == 13:
+    if id == 1:
         return render_template('admin.html')
     else:
         flash("You have to be an Admin to access this page.....")
